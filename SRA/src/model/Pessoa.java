@@ -1,10 +1,20 @@
-import java.util.ArrayList;
+package model;
 
+/**
+ *
+ * @author VAIO
+ */
 public class Pessoa {
+    
     private String nome;
     private int idade;
     //private Enum<hobby, genero, formacao>;
     private String time;
+
+    public Pessoa(String nome, int idade) {
+        this.nome = nome;
+        this.idade = idade;
+    }
 
 
     public int getIdade() {
@@ -31,3 +41,4 @@ public class Pessoa {
         this.time = time;
     }
 }
+
