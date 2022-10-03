@@ -4,11 +4,12 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
+/**Classe que representa a rede de conexões, responsavél pela operações
+ *de recomendação de amizade
  * @author VAIO
  */
 public class Rede implements IRede{
+    
     private boolean[][] matriz;
     private List<String> mapa;
     private int numeroVertices;
@@ -94,6 +95,16 @@ public class Rede implements IRede{
 
     public void setNumeroVertices(int numeroVertices) {
         this.numeroVertices = numeroVertices;
+    }
+
+    @Override
+    public int ponderar(Pessoa p1, Pessoa p2) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public int gerarPontuacao(Pessoa p1, Pessoa p2) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 

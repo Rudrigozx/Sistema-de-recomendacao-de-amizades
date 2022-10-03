@@ -3,11 +3,12 @@ package model;
 
 import java.util.List;
 
-/**
- *
+/**Interface responsavel por todos os métodos que a classe: Rede, pode 
+ * fazer 
  * @author VAIO
  */
 public interface IRede {
+    
     void adicionarVertice(String v);
 
     int getIndiceVertice(String v);
@@ -21,6 +22,10 @@ public interface IRede {
     List<Integer> listarAdjacencias(int v);
 
     void imprimir();
-
+            
     int getNumeroVertices();
+    
+    int ponderar(Pessoa p1, Pessoa p2);
+    
+    int gerarPontuacao(Pessoa p1, Pessoa p2);
 }
