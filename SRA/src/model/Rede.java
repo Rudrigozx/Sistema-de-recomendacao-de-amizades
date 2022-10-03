@@ -3,6 +3,8 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.lang.Math;
+import java.util.Objects;
 
 /**Classe que representa a rede de conexões, responsavél pela operações
  *de recomendação de amizade
@@ -99,12 +101,39 @@ public class Rede implements IRede{
 
     @Override
     public int ponderar(Pessoa p1, Pessoa p2) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+       int k = 50;
+       double x = k * (1/gerarPontuacao(p1,p2));
+       return (int) Math.round(x);
+
     }
 
     @Override
     public int gerarPontuacao(Pessoa p1, Pessoa p2) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+       int pontuar;
+
+       pontuar= Math.abs(p1.getIdade() - p2.getIdade())+1;
+
+       if(!Objects.equals(p1.getSexo(), p2.getSexo())) {
+           pontuar += 10;
+       }
+
+       if(!Objects.equals(p1.getTime(), p2.getTime())) {
+            pontuar += 10;
+       }
+
+       if(!Objects.equals(p1.getInteresses().get(0), p2.getInteresses().get(0))) {
+            pontuar += 5;
+       }
+
+       if(!Objects.equals(p1.getInteresses().get(1), p2.getInteresses().get(1))) {
+            pontuar += 5;
+       }
+
+       if(!Objects.equals(p1.getInteresses().get(2), p2.getInteresses().get(2))) {
+            pontuar += 5;
+       }
+
+        return pontuar;
     }
 
 
