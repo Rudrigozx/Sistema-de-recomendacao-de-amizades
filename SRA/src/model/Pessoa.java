@@ -19,7 +19,7 @@ public class Pessoa {
         this.idade = idade;
     }
 
-    public Pessoa(String nome, int idade, String time, String sexo) {
+    public Pessoa(String nome, int idade, String time, String sexo ) {
         this.nome = nome;
         this.idade = idade;
         this.time = time;

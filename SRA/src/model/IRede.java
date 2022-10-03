@@ -9,13 +9,15 @@ import java.util.List;
  */
 public interface IRede {
     
-    void adicionarVertice(String v);
 
-    int getIndiceVertice(String v);
 
-    void adicionarAresta(String v1, String v2);
+    void adicionarVertice(Pessoa p);
 
-    void adicionarAresta(int v1, int v2);
+    int getIndiceVertice(Pessoa p);
+
+    void adicionarAresta(Pessoa p1, Pessoa p2);
+
+
 
     void imprimirMapa();
 

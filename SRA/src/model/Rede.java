@@ -12,51 +12,50 @@ import java.util.Objects;
  */
 public class Rede implements IRede{
     
-    private boolean[][] matriz;
-    private List<String> mapa;
+    private int[][] matriz;
+    private List<Pessoa> mapa;
     private int numeroVertices;
 
     public Rede(int numeroVertices) {
         this.numeroVertices = numeroVertices;
-        this.mapa = new ArrayList<String>(numeroVertices);
-        this.matriz = new boolean[numeroVertices][numeroVertices];
+        this.mapa = new ArrayList<Pessoa>(numeroVertices);
+        this.matriz = new int[numeroVertices][numeroVertices];
         for(int i=0; i<numeroVertices; i++) {
-            this.matriz[i][i] = true;
+            this.matriz[i][i] = 0;
         }
     }
 
     @Override
-    public void adicionarVertice(String v) {
-        this.mapa.add(v);
+    public void adicionarVertice(Pessoa p) {
+        this.mapa.add(p);
     }
 
     @Override
-    public int getIndiceVertice(String v) {
-        return this.mapa.indexOf(v);
+    public int getIndiceVertice(Pessoa p) {
+        return this.mapa.indexOf(p);
     }
 
-    @Override
-    public void adicionarAresta(String v1, String v2) {
-        this.adicionarAresta(getIndiceVertice(v1), getIndiceVertice(v2));
-    }
+
+
+
 
     @Override
-    public void adicionarAresta(int v1, int v2) {
-        this.matriz[v1][v2] = true;
-        this.matriz[v2][v1] = true;
+    public void adicionarAresta(Pessoa p1, Pessoa p2) {
+        this.matriz[getIndiceVertice(p1)][getIndiceVertice(p2)] = ponderar(p1,p2);
+        this.matriz[getIndiceVertice(p2)][getIndiceVertice(p1)] = ponderar(p1,p2);
     }
 
     @Override
     public void imprimirMapa() {
-        for(String v: this.mapa)
-            System.out.println(getIndiceVertice(v) + " - " + v);
+        for(Pessoa p: this.mapa)
+            System.out.println(getIndiceVertice(p) + " - " + p);
     }
 
     @Override
     public List<Integer> listarAdjacencias(int v) {
         List<Integer> adjacentes = new ArrayList<Integer>(this.numeroVertices);
         for(int j=0; j<this.numeroVertices;j++)
-            if(this.matriz[v][j] && v!=j) {
+            if(v!=j) {
                 adjacentes.add(j);
             }
         return adjacentes;
@@ -74,19 +73,19 @@ public class Rede implements IRede{
     }
 
 
-    public boolean[][] getMatriz() {
+    public int[][] getMatriz() {
         return matriz;
     }
 
-    public void setMatriz(boolean[][] matriz) {
+    public void setMatriz(int[][] matriz) {
         this.matriz = matriz;
     }
 
-    public List<String> getMapa() {
+    public List<Pessoa> getMapa() {
         return mapa;
     }
 
-    public void setMapa(List<String> mapa) {
+    public void setMapa(List<Pessoa> mapa) {
         this.mapa = mapa;
     }
 
@@ -121,7 +120,7 @@ public class Rede implements IRede{
             pontuar += 10;
        }
 
-       if(!Objects.equals(p1.getInteresses().get(0), p2.getInteresses().get(0))) {
+     /*  if(!Objects.equals(p1.getInteresses().get(0), p2.getInteresses().get(0))) {
             pontuar += 5;
        }
 
@@ -131,7 +130,7 @@ public class Rede implements IRede{
 
        if(!Objects.equals(p1.getInteresses().get(2), p2.getInteresses().get(2))) {
             pontuar += 5;
-       }
+       }*/
 
         return pontuar;
     }
