@@ -41,8 +41,8 @@ public class Rede implements IRede{
 
     @Override
     public void adicionarAresta(Pessoa p1, Pessoa p2) {
-        this.matriz[getIndiceVertice(p1)][getIndiceVertice(p2)] = ponderar(p1,p2);
-        this.matriz[getIndiceVertice(p2)][getIndiceVertice(p1)] = ponderar(p1,p2);
+        this.matriz[getIndiceVertice(p1)][getIndiceVertice(p2)] =  ponderar(p1,p2);
+        this.matriz[getIndiceVertice(p2)][getIndiceVertice(p1)] =  ponderar(p1,p2);
     }
 
     @Override
@@ -101,36 +101,46 @@ public class Rede implements IRede{
     @Override
     public int ponderar(Pessoa p1, Pessoa p2) {
        int k = 50;
-       double x = k * (1/gerarPontuacao(p1,p2));
+       double y = gerarPontuacao(p1,p2);
+       double x = k * (1/y);
        return (int) Math.round(x);
 
     }
 
     @Override
-    public int gerarPontuacao(Pessoa p1, Pessoa p2) {
-       int pontuar;
+    public double gerarPontuacao(Pessoa p1, Pessoa p2) {
+       double pontuar = 0.0;
 
-       pontuar= Math.abs(p1.getIdade() - p2.getIdade())+1;
+       int x= Math.abs(p1.getIdade() - p2.getIdade());
 
+        if(x<10){
+            pontuar=1.0;
+        }
+        if(x>=10 && x<=20){
+            pontuar=2.0;
+        }
+        if(x>20){
+            pontuar=3.0;
+        }
        if(!Objects.equals(p1.getSexo(), p2.getSexo())) {
-           pontuar += 10;
+           pontuar += 1.0;
        }
 
        if(!Objects.equals(p1.getTime(), p2.getTime())) {
-            pontuar += 10;
+            pontuar += 1.0;
        }
 
-     /*  if(!Objects.equals(p1.getInteresses().get(0), p2.getInteresses().get(0))) {
-            pontuar += 5;
+       if(!Objects.equals(p1.getInteresses().get(0), p2.getInteresses().get(0))) {
+            pontuar += 1.0;
        }
 
        if(!Objects.equals(p1.getInteresses().get(1), p2.getInteresses().get(1))) {
-            pontuar += 5;
+            pontuar += 1.0;
        }
 
        if(!Objects.equals(p1.getInteresses().get(2), p2.getInteresses().get(2))) {
-            pontuar += 5;
-       }*/
+            pontuar += 1.0;
+       }
 
         return pontuar;
     }

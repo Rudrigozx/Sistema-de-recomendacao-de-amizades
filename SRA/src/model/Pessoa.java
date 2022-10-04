@@ -19,11 +19,14 @@ public class Pessoa {
         this.idade = idade;
     }
 
-    public Pessoa(String nome, int idade, String time, String sexo ) {
+    public Pessoa(String nome, int idade, String time, String sexo, String hobby, String generoFilme, String formação) {
         this.nome = nome;
         this.idade = idade;
         this.time = time;
         this.sexo = sexo;
+        interesses.add(hobby);
+        interesses.add(generoFilme);
+        interesses.add(formação);
     }
 
     public int getIdade() {
