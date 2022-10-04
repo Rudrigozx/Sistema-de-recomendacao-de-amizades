@@ -10,10 +10,14 @@ public class Pessoa {
     
     private String nome;
     private int idade;
+    private int Id;
     private String sexo;
     private ArrayList interesses = new ArrayList<String>(); //<hobby, genero, formacao>;
     private String time;
 
+    public Pessoa() {
+
+    }
     public Pessoa(String nome, int idade) {
         this.nome = nome;
         this.idade = idade;
@@ -57,8 +61,10 @@ public class Pessoa {
         return interesses;
     }
 
-    public void setInteresses(ArrayList interesses) {
-        this.interesses = interesses;
+    public void setInteresses(String hobby, String genero, String formação) {
+        this.interesses.add(hobby);
+        this.interesses.add(genero);
+        this.interesses.add(formação);
     }
 
     public String getSexo() {
@@ -67,6 +73,14 @@ public class Pessoa {
 
     public void setSexo(String sexo) {
         this.sexo = sexo;
+    }
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
     }
 }
 
