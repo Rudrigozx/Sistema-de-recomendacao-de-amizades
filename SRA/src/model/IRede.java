@@ -16,7 +16,7 @@ public interface IRede {
 
     int getIndiceVertice(Pessoa p);
 
-    void adicionarAresta(Pessoa p1, Pessoa p2);
+    public void adicionarAresta(Vertice v1, Vertice v2);
 
 
 

@@ -13,7 +13,7 @@ public class Main {
     public static void main(String[] args) {
         Conexão conexão = new Conexão();
         conexão.conectBD();
-        ArrayList<Pessoa> list = conexão.listaPessoa();
+        ArrayList<Vertice> list = conexão.listaVertice();
 
        Rede rede = new Rede(list.size());
 
@@ -21,10 +21,10 @@ public class Main {
      //  Pessoa p2 = new Pessoa("lucas",34, "palmeiras", "F","pintura","romance","superior");
 
         for (int i=0;i< list.size();i++){
-            rede.adicionarVertice(list.get(i));
+            rede.adicionarVertice(list.get(i).getPessoa());
 
         }
-        rede.adicionarAresta(list.get(6),list.get(1));
+        rede.adicionarAresta(list.get(5),list.get(1));
         rede.adicionarAresta(list.get(6),list.get(5));
         rede.adicionarAresta(list.get(5),list.get(1));
         rede.adicionarAresta(list.get(1),list.get(7));
@@ -48,12 +48,18 @@ public class Main {
         System.out.println("\n");
 
         for (int i=0;i< list.size();i++){
-            System.out.println("Amigos de "+list.get(i).getNome()+"["+ list.indexOf(list.get(i)) +"]"+ ": ");
-            System.out.println(rede.listarAmizades(list.get(i)));
+            System.out.println("Amigos de "+list.get(i).getPessoa().getNome()+"["+ list.indexOf(list.get(i)) +"]"+ ": ");
+            System.out.println(rede.listarAmizades(list.get(i).getPessoa()));
             System.out.println("\n");
         }
 
 
+            ArrayList<Vertice> caminho=rede.encontrarMenorCaminhoDijkstra(list.get(0),list.get(7));
+        for (int i=0;i< caminho.size();i++) {
+            System.out.println(caminho.get(i).getPessoa().getNome());
+        }
+
     }
+
     
 }

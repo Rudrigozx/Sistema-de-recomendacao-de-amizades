@@ -2,6 +2,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.lang.Math;
 import java.util.Objects;
@@ -11,7 +12,8 @@ import java.util.Objects;
  * @author VAIO
  */
 public class Rede implements IRede{
-    
+    private ArrayList<Aresta> arestas = new ArrayList<Aresta>();
+    private ArrayList<Vertice> vertices = new ArrayList<Vertice>();
     private int[][] matriz;
     private List<Pessoa> mapa;
     private int numeroVertices;
@@ -27,6 +29,7 @@ public class Rede implements IRede{
 
     @Override
     public void adicionarVertice(Pessoa p) {
+        this.vertices.add(new Vertice(p));
         this.mapa.add(p);
     }
 
@@ -40,9 +43,16 @@ public class Rede implements IRede{
 
 
     @Override
-    public void adicionarAresta(Pessoa p1, Pessoa p2) {
-        this.matriz[getIndiceVertice(p1)][getIndiceVertice(p2)] =  ponderar(p1,p2);
-        this.matriz[getIndiceVertice(p2)][getIndiceVertice(p1)] =  ponderar(p1,p2);
+    public void adicionarAresta(Vertice v1, Vertice v2) {
+        int peso = ponderar(v1.getPessoa(),v2.getPessoa());
+
+        Aresta a = new Aresta(peso, v1 , v2);
+
+
+        this.arestas.add(a);
+
+        this.matriz[getIndiceVertice(v1.getPessoa())][getIndiceVertice(v2.getPessoa())] =  peso;
+        this.matriz[getIndiceVertice(v2.getPessoa())][getIndiceVertice(v1.getPessoa())] =  peso;
     }
 
     @Override
@@ -157,6 +167,99 @@ public class Rede implements IRede{
 
         return pontuar;
     }
+    public ArrayList<Vertice> getVertices() {
+        return vertices;
+    }
 
+    public Aresta acharAresta(Vertice vet1, Vertice vet2){
+        for(int i=0; i<this.arestas.size();i++){
+            if( ((this.arestas.get(i).getOrigem().getPessoa().equals(vet1.getPessoa())) &&
+                    (this.arestas.get(i).getDestino().getPessoa().equals(vet2.getPessoa()))) ||
+                    ((this.arestas.get(i).getOrigem().getPessoa().equals(vet2.getPessoa())) &&
+                            (this.arestas.get(i).getDestino().getPessoa().equals(vet1.getPessoa()))) ){
+                return this.arestas.get(i);
+            }
+        }
+        return null;
+    }
+    public void limparVerticesPai(){
+        for(int i=0; i<this.getVertices().size() ;i++)
+            this.getVertices().get(i).setPai(null);
+    }
+    //DIJKSTRA
+    //metodo que retorna o caminho menos custoso entre dois vertices a partid do algoritmo de Dijkstra
+    public ArrayList<Vertice> encontrarMenorCaminhoDijkstra(Vertice v1,Vertice v2) {
+
+
+        ArrayList<Vertice> menorCaminho = new ArrayList<Vertice>();
+
+        Vertice verticeCaminho;
+
+        Vertice atual;
+
+        Vertice vizinho;
+
+        Aresta ligacao;
+
+        ArrayList<Vertice> naoVisitados = new ArrayList<Vertice>();
+
+        menorCaminho.add(v1);
+
+
+        for (int i = 0; i < this.getVertices().size(); i++) {
+
+            if (this.getVertices().get(i).getPessoa().getNome().equals(v1.getPessoa().getNome()))
+                this.getVertices().get(i).setDistancia(0);
+            else
+                this.getVertices().get(i).setDistancia(9999);
+
+            naoVisitados.add(this.getVertices().get(i));
+        }
+
+        Collections.sort(naoVisitados);
+
+        while (!naoVisitados.isEmpty()) {
+
+            atual = naoVisitados.get(0);
+
+            for (int i = 0; i < atual.getVizinhos().size(); i++) {
+
+                vizinho = atual.getVizinhos().get(i);
+
+                if (!vizinho.isVisitado()) {
+
+                    ligacao = this.acharAresta(atual,vizinho);
+                    if (vizinho.getDistancia() > (atual.getDistancia() + ligacao.getPeso())) {
+                        vizinho.setDistancia(atual.getDistancia()
+                                + ligacao.getPeso());
+                        vizinho.setPai(atual);
+
+                        if (vizinho == v2) {
+                            menorCaminho.clear();
+                            verticeCaminho = vizinho;
+                            menorCaminho.add(vizinho);
+                            while (verticeCaminho.getPai() != null) {
+                                menorCaminho.add(verticeCaminho.getPai());
+                                verticeCaminho = verticeCaminho.getPai();
+
+                            }
+
+                            Collections.sort(menorCaminho);
+
+                        }
+                    }
+                }
+
+            }
+
+            atual.setVisitado(true);
+            naoVisitados.remove(atual);
+
+            Collections.sort(naoVisitados);
+
+        }
+        this.limparVerticesPai();
+        return menorCaminho;
+    }
 
 }
