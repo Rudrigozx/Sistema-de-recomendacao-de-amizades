@@ -48,7 +48,7 @@ public class Rede implements IRede{
     @Override
     public void imprimirMapa() {
         for(Pessoa p: this.mapa)
-            System.out.println(getIndiceVertice(p) + " - " + p);
+            System.out.println(getIndiceVertice(p) + " - " + p.getNome());
     }
 
     @Override
@@ -60,12 +60,25 @@ public class Rede implements IRede{
             }
         return adjacentes;
     }
+    public List<String> listarAmizades(Pessoa p) {
+        List<String> amigos = new ArrayList<String>(this.numeroVertices);
+        for (int i = 0; i < this.numeroVertices; i++) {
+            if (matriz[mapa.indexOf(p)][i] > 0){
+                amigos.add(mapa.get(i).getNome());}
+        }
+        return amigos;
+    }
+
+
 
     @Override
     public void imprimir() {
+
         for(int i=0; i < this.numeroVertices; i++ ) {
+
             for(int j=0; j < this.numeroVertices; j++) {
                 System.out.print(this.matriz[i][j] + "\t");
+
             }
             System.out.println("");
         }

@@ -1,6 +1,7 @@
 
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**Interface responsavel por todos os métodos que a classe: Rede, pode 
