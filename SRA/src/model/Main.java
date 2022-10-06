@@ -24,7 +24,7 @@ public class Main {
             rede.adicionarVertice(list.get(i).getPessoa());
 
         }
-        rede.adicionarAresta(list.get(5),list.get(1));
+        rede.adicionarAresta(list.get(6),list.get(1));
         rede.adicionarAresta(list.get(6),list.get(5));
         rede.adicionarAresta(list.get(5),list.get(1));
         rede.adicionarAresta(list.get(1),list.get(7));
@@ -44,6 +44,8 @@ public class Main {
 
         rede.imprimirMapa();
         System.out.println("\n");
+        rede.imprimirVertices();
+        System.out.println("\n");
        rede.imprimir();
         System.out.println("\n");
 
@@ -54,7 +56,7 @@ public class Main {
         }
 
 
-            ArrayList<Vertice> caminho=rede.encontrarMenorCaminhoDijkstra(list.get(0),list.get(7));
+            ArrayList<Vertice> caminho=rede.encontrarMenorCaminhoDijkstra(list.get(5),list.get(4));
         for (int i=0;i< caminho.size();i++) {
             System.out.println(caminho.get(i).getPessoa().getNome());
         }

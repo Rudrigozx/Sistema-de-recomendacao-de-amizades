@@ -1,10 +1,11 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Vertice implements Comparable<Vertice> {
     private Pessoa pessoa;
-    private int distancia = 0;
+    private int distancia = -999;
     private Vertice pai;
     private ArrayList<Aresta> incidentes = new ArrayList<Aresta>();
     private ArrayList<Vertice> vizinhos = new ArrayList<Vertice>();
@@ -63,6 +64,7 @@ public class Vertice implements Comparable<Vertice> {
         }
     }
 
+
     public void addVizinhos(Vertice vizinho) {
         this.vizinhos.add(vizinho);
     }
@@ -81,16 +83,15 @@ public class Vertice implements Comparable<Vertice> {
         return false;
     }
 
-
     @Override
     public int compareTo(Vertice vertice) {
 
-        if(this.getDistancia() < vertice.getDistancia())
+        if(this.distancia > vertice.getDistancia())
             return -1;
-        else if(this.getDistancia() == vertice.getDistancia())
-            return 0;
+        else if(this.distancia< vertice.getDistancia())
+            return 1;
 
-        return 1;
+        return 0;
     }
 
     @Override

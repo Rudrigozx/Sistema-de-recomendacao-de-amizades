@@ -1,11 +1,9 @@
 
 package model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.lang.Math;
-import java.util.Objects;
+import java.util.Collections;
 
 /**Classe que representa a rede de conexões, responsavél pela operações
  *de recomendação de amizade
@@ -44,13 +42,21 @@ public class Rede implements IRede{
 
     @Override
     public void adicionarAresta(Vertice v1, Vertice v2) {
+
         int peso = ponderar(v1.getPessoa(),v2.getPessoa());
 
         Aresta a = new Aresta(peso, v1 , v2);
+        int i = mapa.indexOf(v1.getPessoa());
 
+        int j = mapa.indexOf(v2.getPessoa());
 
         this.arestas.add(a);
+        int k = this.arestas.size();
 
+
+        //adiciona aresta na lista de arestas incidentes em cada vertice
+        this.vertices.get(i).addIncidentes(this.arestas.get(k-1));
+        this.vertices.get(j).addIncidentes(this.arestas.get(k-1));
         this.matriz[getIndiceVertice(v1.getPessoa())][getIndiceVertice(v2.getPessoa())] =  peso;
         this.matriz[getIndiceVertice(v2.getPessoa())][getIndiceVertice(v1.getPessoa())] =  peso;
     }
@@ -60,7 +66,10 @@ public class Rede implements IRede{
         for(Pessoa p: this.mapa)
             System.out.println(getIndiceVertice(p) + " - " + p.getNome());
     }
-
+    public void imprimirVertices() {
+        for(Vertice v: this.getVertices())
+            System.out.println(getVertices().indexOf(v)+ " - " + v.getPessoa().getNome());
+    }
     @Override
     public List<Integer> listarAdjacencias(int v) {
         List<Integer> adjacentes = new ArrayList<Integer>(this.numeroVertices);
@@ -210,28 +219,33 @@ public class Rede implements IRede{
 
             if (this.getVertices().get(i).getPessoa().getNome().equals(v1.getPessoa().getNome()))
                 this.getVertices().get(i).setDistancia(0);
-            else
-                this.getVertices().get(i).setDistancia(9999);
 
             naoVisitados.add(this.getVertices().get(i));
         }
 
         Collections.sort(naoVisitados);
 
+
         while (!naoVisitados.isEmpty()) {
 
             atual = naoVisitados.get(0);
+
+
 
             for (int i = 0; i < atual.getVizinhos().size(); i++) {
 
                 vizinho = atual.getVizinhos().get(i);
 
+
                 if (!vizinho.isVisitado()) {
 
                     ligacao = this.acharAresta(atual,vizinho);
-                    if (vizinho.getDistancia() > (atual.getDistancia() + ligacao.getPeso())) {
-                        vizinho.setDistancia(atual.getDistancia()
-                                + ligacao.getPeso());
+
+                    if (vizinho.getDistancia() < (atual.getDistancia() + ligacao.getPeso())) {
+
+                        vizinho.setDistancia(atual.getDistancia() + ligacao.getPeso());
+
+
                         vizinho.setPai(atual);
 
                         if (vizinho == v2) {
@@ -244,7 +258,8 @@ public class Rede implements IRede{
 
                             }
 
-                            Collections.sort(menorCaminho);
+                                Collections.sort(menorCaminho);
+
 
                         }
                     }
@@ -255,7 +270,14 @@ public class Rede implements IRede{
             atual.setVisitado(true);
             naoVisitados.remove(atual);
 
+            System.out.println("antes");
+            for (Vertice v : naoVisitados)
+                System.out.println(naoVisitados);
             Collections.sort(naoVisitados);
+            System.out.println("depois");
+            for (Vertice v : naoVisitados)
+                System.out.println(naoVisitados);
+
 
         }
         this.limparVerticesPai();
