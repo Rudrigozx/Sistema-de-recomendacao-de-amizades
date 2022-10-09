@@ -1,7 +1,6 @@
 
-package model;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 /**Interface responsavel por todos os métodos que a classe: Rede, pode 
@@ -16,9 +15,10 @@ public interface IRede {
 
     int getIndiceVertice(Pessoa p);
 
-    public void adicionarAresta(Vertice v1, Vertice v2);
+    public List<String> listarAmizades(Pessoa p);
+    void adicionarAresta(Pessoa v1, Pessoa v2);
 
-
+    void adicionarAresta(int v1, int v2);
 
     void imprimirMapa();
 

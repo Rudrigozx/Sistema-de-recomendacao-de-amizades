@@ -1,4 +1,4 @@
-package model;
+
 import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
@@ -7,7 +7,7 @@ public class Conexão {
     PreparedStatement pstn;
     Connection c;
     ResultSet rs;
-    ArrayList<Vertice> banco = new ArrayList<>();
+    ArrayList<Pessoa> banco = new ArrayList<Pessoa>();
     public Connection conectBD(){
 
         try{
@@ -21,7 +21,7 @@ public class Conexão {
         return c;
     }
 
-    public  ArrayList<Vertice> listaVertice(){
+    public  ArrayList<Pessoa> listaVertice(){
         String sql ="select * from mytable";
         try {
             pstn = c.prepareStatement(sql);
@@ -35,8 +35,8 @@ public class Conexão {
                 pessoa.setSexo(rs.getString("Sexo"));
                 pessoa.setTime(rs.getString("Time"));
                 pessoa.setInteresses(rs.getString("Hobby"),rs.getString("generoFilmes"),rs.getString("interessesEstudo"));
-                Vertice vertice = new Vertice(pessoa);
-                banco.add(vertice);
+
+                banco.add(pessoa);
             }
         }catch (SQLException er){
             JOptionPane.showMessageDialog(null,er.getMessage());
