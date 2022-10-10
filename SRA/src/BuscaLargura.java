@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.PriorityQueue;
+import java.util.*;
 
 public class BuscaLargura {
     private Rede r;
@@ -30,13 +28,14 @@ public class BuscaLargura {
 
         int inicio = r.getIndiceVertice(p);
         inicializar();
-        PriorityQueue<Integer> fila = new PriorityQueue<Integer>();
+        Queue<Integer> fila = new LinkedList<>();
         this.cores[inicio] = Cor.CINZA;
         ordemAchados.add(r.getMapa().get(inicio).getNome());
         this.distancia[inicio] = 0;
         fila.add(inicio);
 
         while (fila.size() > 0) {
+            System.out.println(fila);
             int v = fila.poll();
             List<Integer> adjacenciaV = r.listarAdjacencias(v);
             for (int u : adjacenciaV) {
