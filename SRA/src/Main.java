@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Main {
 
     public static void main(String[] args) {
-        Conexão conexão = new Conexão();
+        RepositorioPessoa conexão = new RepositorioPessoa();
         conexão.conectBD();
         ArrayList<Pessoa> list = conexão.listaVertice();
 
